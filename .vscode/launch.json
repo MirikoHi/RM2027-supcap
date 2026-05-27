@@ -1,0 +1,15 @@
+{
+    "configurations": [
+    {
+        "cwd": "${workspaceFolder}",
+        "executable": "${workspaceRoot}\\build\\${workspaceFolderBasename}.elf",
+        "name": "Debug with JLink",
+        "request": "launch",
+        "type": "cortex-debug",
+        "device": "STM32G474CE",
+        "runToEntryPoint": "main",
+        "showDevDebugOutput": "none",
+        "servertype": "jlink"
+    }
+    ]
+}
