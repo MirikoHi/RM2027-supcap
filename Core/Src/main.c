@@ -106,7 +106,8 @@ int main(void)
   MX_IWDG_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
-
+  extern void systemStart();
+  systemStart();
   /* USER CODE END 2 */
 
   /* Infinite loop */

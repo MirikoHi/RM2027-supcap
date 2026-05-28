@@ -6,7 +6,7 @@
         {
             "label": "mingw32-make task",
             "type": "shell",
-            "command": "mingw32-make -j24 -silent ; mingw32-make clean",
+            "command": "mingw32-make -j24 -silent",
             "problemMatcher": [],          
             "group": {
                 "kind": "build",
