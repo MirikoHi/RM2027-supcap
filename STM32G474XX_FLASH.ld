@@ -193,6 +193,13 @@ SECTIONS
     . = ALIGN(8);
   } >RAM
 
+  .BUFFER :
+  {
+    . = ALIGN(4);
+    *(.BUFFER)
+    . = ALIGN(4);
+  } >RAM
+
 
 
   /* Remove information from the standard libraries */

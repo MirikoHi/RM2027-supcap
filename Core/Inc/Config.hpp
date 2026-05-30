@@ -1,0 +1,14 @@
+#pragma once
+
+/*ADC*/
+
+#define ADC12_CHANNAL_COUNT 4 // Number of Conversion
+#define ADC3_CHANNAL_COUNT 1
+#define HRTIM_INT_SCALER 8
+#define ADC12_BUFFER_SIZE (ADC12_CHANNAL_COUNT * HRTIM_INT_SCALER)
+#define ADC3_BUFFER_SIZE (ADC3_CHANNAL_COUNT * HRTIM_INT_SCALER)
+#define ADC_FILTER_ALPHA 0.7 // 滤波系数
+
+/*HARDWARE*/
+
+#define CAPARR_DCR 0.1f
