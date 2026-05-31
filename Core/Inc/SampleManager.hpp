@@ -3,7 +3,6 @@
 #include "main.h"
 #include "adc.h"
 #include "opamp.h"
-#include "MathUtil.hpp"
 #include "Config.hpp"
 
 namespace SampleManager
@@ -68,5 +67,5 @@ namespace SampleManager
 
     void initADC();
 
-    void updateADC();
+    void updateADCmf(); // 中频ADC环路
 }

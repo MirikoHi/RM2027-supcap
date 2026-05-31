@@ -2,7 +2,7 @@
 
 #include "Communication.hpp"
 #include "PID.hpp"
-#include "MathUtil.hpp"
+#include "Config.hpp"
 #include "adc.h"
 #include "hrtim.h"
 #include "main.h"
@@ -17,17 +17,5 @@
 #define ERROR_NO_POWER_INPUT 0b00100000
 #define ERROR_CAPACITOR 0b01000000
 
-enum DCDCMode
-{
-    BUCK,
-    BUCKBOOST,
-    BOOSTBUCK,
-    BOOST,
-    CALIBRATION_A,
-    CALIBRATION_B
-};
 
-namespace SampleManager
-{
-    
-}
+

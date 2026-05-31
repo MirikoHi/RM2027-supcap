@@ -1,6 +1,7 @@
 #pragma once
 
 #include "main.h"
+#include "Config.hpp"
 
 class IncrementalPID
 {
