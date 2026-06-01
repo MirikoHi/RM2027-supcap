@@ -41,7 +41,7 @@ namespace HRTIM
     }
 
     extern SampleManager::ADCData adcData;
-    __attribute__((section(".code_in_ram"))) void modeStateMachine()
+    __attribute__((section(".RamFunc"))) void modeStateMachine()
     {
         // 根据电压计算占空比
         psData.dutyByVoltage = M_MAX(adcData.vB, 0.01f) / adcData.vA;
@@ -115,6 +115,7 @@ namespace HRTIM
             __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.16f);
             // B侧限制94%占空比
             __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.06f);
+            break;
         case BOOST:
             // A侧常开
             __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, 0U);

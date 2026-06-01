@@ -5,15 +5,10 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
             "compilerPath": "C:\\Pro\\Arm\\GNU Toolchain mingw-w64-i686-arm-none-eabi\\bin\\arm-none-eabi-g++.exe",
             "cStandard": "gnu17",
             "cppStandard": "gnu++23",
-            "intelliSenseMode": "windows-gcc-arm",
+            "intelliSenseMode": "gcc-arm",
             "configurationProvider": "ms-vscode.makefile-tools"
         }
     ],

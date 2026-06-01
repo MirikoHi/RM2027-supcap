@@ -27,7 +27,7 @@ TARGET = supcap
 DEBUG = -g3
 
 # optimization
-OPT = -O2
+OPT = -O
 
 # silent mode
 VERBOSE = 0
@@ -89,6 +89,7 @@ Core/Src/syscalls.c
 
 # CPP sources
 CPP_SOURCES =  \
+$(wildcard Core/cppSrc/*.cpp) \
 $(wildcard Core/Src/*.cpp)
 
 # CPP compiled
@@ -157,7 +158,8 @@ C_INCLUDES =  \
 -IDrivers/STM32G4xx_HAL_Driver/Inc \
 -IDrivers/STM32G4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32G4xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-ICore/cppInc
 
 #######################################
 # LDFLAGS

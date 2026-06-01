@@ -35,6 +35,8 @@ namespace SampleManager
         float iChassis = 0.0f;
     };
 
+    extern ADCData adcData;
+
     struct ADCFitParaTypeDef
     {
         uint32_t UID0;
@@ -62,6 +64,8 @@ namespace SampleManager
         float IW_K;
         float IW_B;
     };
+
+    extern ADCFitParaTypeDef adcFitPara;
 
     void initAnalog();
 
