@@ -7,16 +7,13 @@
 
 #define M_CLAMP(x, min, max) (M_MIN((max), M_MAX((min), (x))))
 
-#define ADC12_CHANNAL_COUNT 4 // Number of Conversion
-#define ADC3_CHANNAL_COUNT 1
-#define HRTIM_INT_SCALER 8
-#define ADC12_BUFFER_SIZE (ADC12_CHANNAL_COUNT * HRTIM_INT_SCALER)
-#define ADC3_BUFFER_SIZE (ADC3_CHANNAL_COUNT * HRTIM_INT_SCALER)
-#define ADC_FILTER_ALPHA 0.7f // 滤波系数
+#define ADC_FILTER_ALPHA 0.7f // ADC滤波系数
 
 #define CAPARR_DCR 0.1f
 
 #define HRTIM_PERIOD 20000
+
+#define ADC_FIT_LIST_NUM 50
 
 #define SOFT_START_TIME 8
 
@@ -33,6 +30,15 @@
 #define BATTERY_LOW_RECOVERY 21.6f
 
 // 短路保护阈值
-#define SCP_VOLTAGE             5.0f
-#define SCP_CURRENT             5.0f
-#define SCP_RECOVER_TIME        1000
+#define SCP_VOLTAGE 5.0f
+#define SCP_CURRENT 5.0f
+#define SCP_RECOVER_TIME 1000
+
+// 过压保护阈值
+#define OVP_A 29.0f
+#define OVP_B 30.5f
+
+// 过流保护阈值
+#define OCP_CAPARR 25.5f
+#define OCP_CHASSIS 20.0f
+#define OCP_REFEREE 6.5f

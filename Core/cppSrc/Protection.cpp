@@ -2,8 +2,12 @@
 #include "SampleManager.hpp"
 #include "SystemState.hpp"
 #include "Modulation.hpp"
+#include <cstring>
 
 Protection::ErrorData errorData;
+const SampleManager::ADCFitParaTypeDef adcFitList[ADC_FIT_LIST_NUM] = {
+
+};
 
 namespace Protection
 {
@@ -129,4 +133,82 @@ namespace Protection
             psData.efficiency = (SampleManager::adcData.vA * SampleManager::adcData.iA) / (SampleManager::adcData.vB * SampleManager::adcData.iB);
         }
     }
-}
+
+    void hrtimFaultHandler()
+    { // 过压/过流保护触发
+
+        if (SampleManager::adcData.vA > OVP_A) // vA过压保护触发
+        {
+            errorData.errorCode |= ERROR_OVP_A;
+            errorData.errorLevel = ERROR_RECOVER_AUTO;
+            HRTIM::disableOutputAB();
+        }
+        if (SampleManager::adcData.iA > OCP_CAPARR) // iA过流保护触发
+        {
+            errorData.errorCode |= ERROR_OCP_A;
+            errorData.errorLevel = ERROR_RECOVER_AUTO;
+            HRTIM::disableOutputAB();
+        }
+        if (SampleManager::adcData.iReferee > OCP_REFEREE) // iR过流保护触发
+        {
+            errorData.errorCode |= ERROR_OCP_R;
+            errorData.errorLevel = ERROR_RECOVER_AUTO;
+            HRTIM::disableOutputAB();
+        }
+        if (SampleManager::adcData.vB > OVP_B) // vB过压保护触发
+        {
+            errorData.errorCode |= ERROR_OVP_B;
+            errorData.errorLevel = ERROR_RECOVER_AUTO;
+            HRTIM::disableOutputAB();
+        }
+        if (SampleManager::adcData.iB > OCP_CAPARR) // iB过流保护触发
+        {
+            errorData.errorCode |= ERROR_OCP_B;
+            errorData.errorLevel = ERROR_RECOVER_AUTO;
+            HRTIM::disableOutputAB();
+        }
+    }
+
+    bool checkHardwareUID()
+    {
+        // 读取寄存器的UID
+
+        sysData.hardwareUID[0] = HAL_GetUIDw0();
+        sysData.hardwareUID[1] = HAL_GetUIDw1();
+        sysData.hardwareUID[2] = HAL_GetUIDw2();
+
+        for (uint8_t i = 0; i < ADC_FIT_LIST_NUM; i++)
+        {
+            if (!memcmp((const void *)sysData.hardwareUID, &adcFitList[i], 12))
+            {
+                SampleManager::adcFitPara = adcFitList[i];
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void autoClearError()
+    {
+        if (errorData.errorLevel == ERROR_RECOVER_AUTO)
+        {
+            errorData.errorCode = 0;
+            errorData.overCurrentCnt = 0;
+            errorData.overVoltageCnt = 0;
+            errorData.errorLevel = NO_ERROR;
+            HRTIM::enableOutputAB();
+        }
+    }
+    void manualClearError()
+    {
+        if (errorData.errorLevel == ERROR_RECOVER_MANUAL)
+        {
+            errorData.errorCode = 0;
+            errorData.shortCircuitCnt = 0;
+
+            errorData.errorLevel = NO_ERROR;
+            HRTIM::enableOutputAB();
+        }
+    }
+} // namespace Protection

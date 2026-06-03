@@ -66,11 +66,8 @@ namespace Protection
     /// @brief HRTIM 故障中断处理函数
     void hrtimFaultHandler();
 
-    /// @brief 配置 ADC 模拟看门狗和 HRTIM 故障输入使能
-    void configAWDG();
-
     /// @brief 检查硬件唯一 ID 
-    void checkHardwareUID();
+    bool checkHardwareUID();
 
     /// @brief 自动恢复错误清除函数
     void autoClearError();

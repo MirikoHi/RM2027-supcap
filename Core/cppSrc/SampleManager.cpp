@@ -1,12 +1,14 @@
 #include "main.h"
 #include "SampleManager.hpp"
+#include "adc.h"
+#include "opamp.h"
 #include <cstring>
-
-static SampleManager::ADCData adcData;
-static SampleManager::ADCFitParaTypeDef adcFitPara;
 
 namespace SampleManager
 {
+    ADCData adcData;
+    ADCFitParaTypeDef adcFitPara;
+
     void initAnalog()
     {
         HAL_OPAMP_SelfCalibrate(&hopamp1); // 采样电压跟随

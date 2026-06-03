@@ -1,9 +1,13 @@
 #pragma once
 
 #include "main.h"
-#include "adc.h"
-#include "opamp.h"
 #include "Config.hpp"
+
+#define ADC12_CHANNAL_COUNT 4 // Number of Conversion
+#define ADC3_CHANNAL_COUNT 1
+#define HRTIM_INT_SCALER 8
+#define ADC12_BUFFER_SIZE (ADC12_CHANNAL_COUNT * HRTIM_INT_SCALER)
+#define ADC3_BUFFER_SIZE (ADC3_CHANNAL_COUNT * HRTIM_INT_SCALER)
 
 namespace SampleManager
 {

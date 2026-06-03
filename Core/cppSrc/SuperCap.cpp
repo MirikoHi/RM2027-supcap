@@ -5,6 +5,7 @@
 #include "Communication.hpp"
 #include "SystemState.hpp"
 #include "SampleManager.hpp"
+#include "Protection.hpp"
 
 SystemData sysData;
 PowerState psData;
@@ -37,11 +38,9 @@ namespace SuperCap
     {
         HAL_Delay(200); // 等待电压稳定
 
-        sysData.hardwareUID[0] = HAL_GetUIDw0();
-        sysData.hardwareUID[1] = HAL_GetUIDw1();
-        sysData.hardwareUID[2] = HAL_GetUIDw2();
-
         Communication::init();
+
+        Protection::checkHardwareUID();
 
         SampleManager::initAnalog();
         SampleManager::initADC();
