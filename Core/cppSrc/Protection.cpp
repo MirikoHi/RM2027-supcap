@@ -116,7 +116,7 @@ namespace Protection
                 HRTIM::disableOutputAB();
                 errorData.errorCode |= ERROR_SCP_B;
                 errorData.errorLevel = ERROR_RECOVER_MANUAL;
-                errorData.errorVoltage = psData.softStartCnt; // adcData.vB;
+                errorData.errorVoltage = SampleManager::adcData.vB;
                 errorData.errorCurrent = SampleManager::adcData.iB;
             }
         }
@@ -210,5 +210,10 @@ namespace Protection
             errorData.errorLevel = NO_ERROR;
             HRTIM::enableOutputAB();
         }
+    }
+    
+    void checkRxDataTimeout(const uint32_t &currentTick)
+    {
+        
     }
 } // namespace Protection

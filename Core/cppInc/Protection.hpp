@@ -66,7 +66,7 @@ namespace Protection
     /// @brief HRTIM 故障中断处理函数
     void hrtimFaultHandler();
 
-    /// @brief 检查硬件唯一 ID 
+    /// @brief 检查硬件唯一 ID
     bool checkHardwareUID();
 
     /// @brief 自动恢复错误清除函数
@@ -74,4 +74,7 @@ namespace Protection
 
     /// @brief 手动恢复错误清除函数
     void manualClearError();
+
+    /// @brief CAN通信超时检测
+    void checkRxDataTimeout(const uint32_t &currentTick);
 }

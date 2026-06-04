@@ -10,7 +10,7 @@ namespace Communication
     TxDataNew txDataNew;
 
     static FDCAN_TxHeaderTypeDef txHeader = {
-        .Identifier = 0x051,
+        .Identifier = TX_IDENTIFIER,
         .IdType = FDCAN_STANDARD_ID,
         .TxFrameType = FDCAN_DATA_FRAME,
         .DataLength = FDCAN_DLC_BYTES_8,
@@ -21,7 +21,7 @@ namespace Communication
         .MessageMarker = 0};
 
     static FDCAN_TxHeaderTypeDef txHeaderNew = {
-        .Identifier = 0x052,
+        .Identifier = TX_IDENTIFIER_NEW,
         .IdType = FDCAN_STANDARD_ID,
         .TxFrameType = FDCAN_DATA_FRAME,
         .DataLength = FDCAN_DLC_BYTES_8,
@@ -43,8 +43,8 @@ namespace Communication
         filter.FilterIndex = 0;
         filter.FilterType = FDCAN_FILTER_DUAL;
         filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-        filter.FilterID1 = 0x061 << 5;
-        filter.FilterID2 = 0x061 << 5;
+        filter.FilterID1 = RX_FILTER << 5;
+        filter.FilterID2 = RX_FILTER << 5;
 
         rxData.enableDCDC = 1;
         rxData.systemRestart = 0;

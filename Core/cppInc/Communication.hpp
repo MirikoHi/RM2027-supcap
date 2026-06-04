@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "fdcan.h"
+#include "Config.hpp"
 
 namespace Communication
 {
