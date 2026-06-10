@@ -8,9 +8,6 @@
 
 #define ADC_FILTER_ALPHA 0.7f // ADC滤波系数
 
-// Hardware
-#define CAPARR_DCR 0.1f
-
 // Developer
 #define HRTIM_PERIOD 20000
 #define ADC_FIT_LIST_NUM 50
@@ -22,6 +19,14 @@
 #define CAPARR_LOW_VOLTAGE 10.0f
 #define CAPARR_MAX_VOLTAGE 28.8f
 #define CAPARR_MAX_CURRENT 15.0f
+// Hardware
+#define CAPARR_DCR 0.1f
+#define CM01_CURRENT_LIMIT 15.0f
+// 电容组漏电/断连保护.
+// 当等效容量过低则认为电容组断连，容量过高认为电容组漏电。
+#define CAPARR_DEFUALT_CAPACITY 4.4f
+#define CAPARR_CAPACITY_HT 10.0f
+#define CAPARR_CAPACITY_LT 0.2f
 
 // CAN通信Filter
 #define RX_FILTER 0x061
