@@ -5,7 +5,7 @@ namespace CapArray
 {
     CAPARRStatus capStatus;
 
-    __attribute__((section(".code_in_ram"))) void updateMaxCurrent()
+    __RAM_FUNC void updateMaxCurrent()
     {
         if (SampleManager::adcData.vCap > CAPARR_LOW_VOLTAGE)
         {
@@ -24,7 +24,7 @@ namespace CapArray
         }
     }
 
-    __attribute__((section(".code_in_ram"))) inline void updateCurrentforEstimation()
+    __RAM_FUNC inline void updateCurrentforEstimation()
     {
         capStatus.capEstData.maxIB = M_MAX(capStatus.capEstData.maxIB, SampleManager::adcData.iB);
         capStatus.capEstData.minIB = M_MIN(capStatus.capEstData.minIB, SampleManager::adcData.iB);

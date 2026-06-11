@@ -41,7 +41,7 @@ namespace HRTIM
     }
 
     extern SampleManager::ADCData adcData;
-    __attribute__((section(".RamFunc"))) void modeStateMachine()
+    __RAM_FUNC void modeStateMachine()
     {
         // 根据电压计算占空比
         psData.dutyByVoltage = M_MAX(adcData.vB, 0.01f) / adcData.vA;

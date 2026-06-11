@@ -34,7 +34,7 @@ namespace PowerManager
         }
     }
 
-    __attribute__((section(".RamFunc"))) inline void updatePWM()
+    __RAM_FUNC inline void updatePWM()
     {
         __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, psData.ACMP3);
         __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, psData.BCMP3);

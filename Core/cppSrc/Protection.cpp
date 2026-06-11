@@ -84,7 +84,7 @@ namespace Protection
         }
     }
 
-    __attribute__((section(".RamFunc"))) void checkShortCircuit()
+    __RAM_FUNC void checkShortCircuit()
     {
         // 检测短路保护，在ADC解码后立刻调用
         if (SampleManager::adcData.vA <= SCP_VOLTAGE && -SampleManager::adcData.iA >= SCP_CURRENT)
@@ -123,7 +123,7 @@ namespace Protection
         }
     }
 
-    __attribute__((section(".RamFunc"))) void checkEfficiency()
+    __RAM_FUNC void checkEfficiency()
     {
         if (SampleManager::adcData.iA > 0.5f)
         {

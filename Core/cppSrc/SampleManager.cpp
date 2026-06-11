@@ -36,7 +36,7 @@ namespace SampleManager
         HAL_ADC_Start_DMA(&hadc3, (uint32_t *)adcData.rawData3, ADC3_BUFFER_SIZE);
     }
 
-    __attribute__((section(".RamFunc"))) void updateADCmf()
+    __RAM_FUNC void updateADCmf()
     {
         for (uint8_t i = 0; i < HRTIM_INT_SCALER; i++)
         {
