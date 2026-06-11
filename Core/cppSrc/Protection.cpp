@@ -4,13 +4,14 @@
 #include "Modulation.hpp"
 #include <cstring>
 
-Protection::ErrorData errorData;
 const SampleManager::ADCFitParaTypeDef adcFitList[ADC_FIT_LIST_NUM] = {
 
 };
 
 namespace Protection
 {
+    ErrorData errorData;
+    
     void errorHandlerLF()
     {
         if (errorData.errorLevel == WARNING)

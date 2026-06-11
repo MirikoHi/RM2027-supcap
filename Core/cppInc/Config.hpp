@@ -13,6 +13,12 @@
 #define ADC_FIT_LIST_NUM 50
 #define SOFT_START_TIME 8          // 软启动计数值，单位为(1/4kHz)
 #define MAX_INDUCTOR_CURRENT 25.0f // 最大电感电流
+/*-------- DEFUALT --------*/
+#define REFEREE_DEFUALT_POWER 37.0f
+#define REFEREE_ENERGY_BUFFER 57U
+#define REFEREE_POWER_BIAS_LIMIT 15.0f
+#define REFEREE_POWER_BIAS_WARNING 10.0f
+#define RXDATA_TIMEOUT 500U
 
 // 电容组保护
 #define CAPARR_CUTOFF_VOLTAGE 5.0f

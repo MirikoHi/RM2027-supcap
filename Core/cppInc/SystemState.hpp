@@ -33,6 +33,8 @@ struct PowerState
     bool outputAllow = 1;
 
     float dutyByVoltage = 0.0f;
+    uint16_t ACMP3 = 0;
+    uint16_t BCMP3 = 0;
     float efficiency = 1.0f;
 
     uint8_t softStartCnt = SOFT_START_TIME;

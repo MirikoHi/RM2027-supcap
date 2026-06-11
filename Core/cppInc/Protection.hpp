@@ -51,6 +51,8 @@ namespace Protection
         float errorCurrent = 0.0f;
     };
 
+    extern ErrorData errorData;
+
     /// @brief 错误处理主函数
     void errorHandlerLF();
 

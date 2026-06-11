@@ -93,34 +93,24 @@ namespace HRTIM
             break;
         }
 
-        // 根据状态操作HRTIM寄存器，并分别计算A和B的占空比
+        // 根据状态计算A和B的比较值
         switch (psData.mode)
         {
         case BUCK:
-            // A侧限制94%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.06f);
-            // B侧常开
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, 0U);
-
+            psData.ACMP3 = psData.dutyByVoltage * HRTIM_PERIOD;
+            psData.BCMP3 = 0;
             break;
         case BUCKBOOST:
-            // A侧限制94%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.06f);
-            // B侧固定84%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.16f);
-
+            psData.ACMP3 = psData.dutyByVoltage * 0.4f * HRTIM_PERIOD + 0.4f * HRTIM_PERIOD;
+            psData.BCMP3 = 0.4f * HRTIM_PERIOD / psData.dutyByVoltage + 0.4f * HRTIM_PERIOD;
             break;
         case BOOSTBUCK:
-            // A侧固定84%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.16f);
-            // B侧限制94%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.06f);
+            psData.ACMP3 = psData.dutyByVoltage * 0.4f * HRTIM_PERIOD + 0.4f * HRTIM_PERIOD;
+            psData.BCMP3 = 0.4f * HRTIM_PERIOD / psData.dutyByVoltage + 0.4f * HRTIM_PERIOD;
             break;
         case BOOST:
-            // A侧常开
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, 0U);
-            // B侧限制94%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.06f);
+            psData.ACMP3 = 0;
+            psData.BCMP3 = HRTIM_PERIOD / psData.dutyByVoltage;
             break;
         case CALIBRATION_B:
             // A侧固定80%占空比
