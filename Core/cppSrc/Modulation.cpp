@@ -43,8 +43,8 @@ namespace HRTIM
     extern SampleManager::ADCData adcData;
     __RAM_FUNC void modeStateMachine()
     {
-        // 根据电压计算占空比
-        psData.dutyByVoltage = M_MAX(adcData.vB, 0.01f) / adcData.vA;
+        // 计算占空比
+        psData.dutyByVoltage = psData.dutyTarget;
 
         // 根据占空比进行状态切换
         switch (psData.mode)
@@ -97,32 +97,32 @@ namespace HRTIM
         switch (psData.mode)
         {
         case BUCK:
-            psData.ACMP3 = psData.dutyByVoltage * HRTIM_PERIOD;
+            psData.ACMP3 = HRTIM_PERIOD - (psData.dutyByVoltage * HRTIM_PERIOD);
             psData.BCMP3 = 0;
             break;
         case BUCKBOOST:
-            psData.ACMP3 = psData.dutyByVoltage * 0.4f * HRTIM_PERIOD + 0.4f * HRTIM_PERIOD;
-            psData.BCMP3 = 0.4f * HRTIM_PERIOD / psData.dutyByVoltage + 0.4f * HRTIM_PERIOD;
+            psData.ACMP3 = HRTIM_PERIOD - (psData.dutyByVoltage * 0.44f * HRTIM_PERIOD + 0.44f * HRTIM_PERIOD);
+            psData.BCMP3 = HRTIM_PERIOD - (0.44f * HRTIM_PERIOD / psData.dutyByVoltage + 0.44f * HRTIM_PERIOD);
             break;
         case BOOSTBUCK:
-            psData.ACMP3 = psData.dutyByVoltage * 0.4f * HRTIM_PERIOD + 0.4f * HRTIM_PERIOD;
-            psData.BCMP3 = 0.4f * HRTIM_PERIOD / psData.dutyByVoltage + 0.4f * HRTIM_PERIOD;
+            psData.ACMP3 = HRTIM_PERIOD - (psData.dutyByVoltage * 0.44f * HRTIM_PERIOD + 0.44f * HRTIM_PERIOD);
+            psData.BCMP3 = HRTIM_PERIOD - (0.44f * HRTIM_PERIOD / psData.dutyByVoltage + 0.44f * HRTIM_PERIOD);
             break;
         case BOOST:
             psData.ACMP3 = 0;
-            psData.BCMP3 = HRTIM_PERIOD / psData.dutyByVoltage;
+            psData.BCMP3 = HRTIM_PERIOD - (HRTIM_PERIOD / psData.dutyByVoltage);
             break;
         case CALIBRATION_B:
             // A侧固定80%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.20f);
+            psData.ACMP3 = HRTIM_PERIOD * 0.20f;
             // B侧固定100%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, 0U);
+            psData.BCMP3 = 0;
             break;
         case CALIBRATION_A:
-            // B侧固定80%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, HRTIM_PERIOD * 0.20f);
             // A侧固定100%占空比
-            __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, 0U);
+            psData.ACMP3 = 0;
+            // B侧固定80%占空比
+            psData.BCMP3 = HRTIM_PERIOD * 0.20f;
             break;
         default:
             break;

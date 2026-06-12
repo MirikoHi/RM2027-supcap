@@ -41,7 +41,7 @@ struct PowerState
     float iLLimit = MAX_INDUCTOR_CURRENT;
 
     DCDCMode mode = BUCK;
-    float iLTarget = 0.0f;
+    float dutyTarget = 0.0f;
     float IRQLoad = 0.0f;
 };
 

@@ -56,21 +56,21 @@ namespace PowerManager
 
     struct LoopControlData
     {
-        IncrementalPID iRPID{0.1f, 0.2f, 0.10f, 0.01f};
+        IncrementalPID iRPID{0.1f, 0.2f, 0.10f, 0.01f}; // 裁判系统功率环
         // IncrementalPID vCapPID {0.0f, 0.0f, 0.02f, 0.0f};
 
-        float currentLimitKI = 0.8f;
-        float voltageLimitKI = 0.01f;
+        float currentLimitKI = 0.8f;  // 电容组电流环
+        float voltageLimitKI = 0.01f; // 电容组电压环
         float burstKI = 2.0f;
 
         float vWPTTarget = 26.2f; // 无线充电目标电压
         float wptVoltageKI = 0.001f;
 
-        float deltaIL;
-        float dIL_VCap_Max;
+        float deltaDR;
+        float dDL_VCap_Max;
         // float dIL_VCap_MaxBurst;
-        float dIL_IB_Positive;
-        float dIL_IB_Negative;
+        float dDL_IB_Positive;
+        float dDL_IB_Negative;
 
         float dIL_recoverBurst;
     };
@@ -83,5 +83,5 @@ namespace PowerManager
 
     void updateMFLoop();
 
-    void updateRefereePower(const Communication::RxData &rd, const uint32_t& currentTick);
+    void updateRefereePower(const Communication::RxData &rd, const uint32_t &currentTick);
 }

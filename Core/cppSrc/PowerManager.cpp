@@ -5,6 +5,8 @@
 #include "Modulation.hpp"
 #include "CapArray.hpp"
 
+#include "tim.h"
+
 namespace PowerManager
 {
     ControlData ctrlData;
@@ -67,30 +69,32 @@ namespace PowerManager
         }
 
         // 默认设为裁判系统功率PID的输出
-        mfLoop.deltaIL = mfLoop.iRPID.getOutput();
+        mfLoop.deltaDR = mfLoop.iRPID.getOutput();
 
-        mfLoop.dIL_VCap_Max = mfLoop.voltageLimitKI * (CAPARR_MAX_VOLTAGE - SampleManager::adcData.vCap);
-        mfLoop.dIL_IB_Positive = mfLoop.currentLimitKI * (CapArray::capStatus.maxInCurrent - SampleManager::adcData.iCap);
-        mfLoop.dIL_IB_Negative = mfLoop.currentLimitKI * (-SampleManager::adcData.iCap - CapArray::capStatus.maxOutCurrent);
+        mfLoop.dDL_VCap_Max = mfLoop.voltageLimitKI * (CAPARR_MAX_VOLTAGE - SampleManager::adcData.vCap);
 
-        if ((SampleManager::adcData.vCap > CAPARR_MAX_VOLTAGE * 0.9f) && (mfLoop.dIL_VCap_Max < mfLoop.deltaIL))
+        mfLoop.dDL_IB_Positive = mfLoop.currentLimitKI * (CapArray::capStatus.maxInCurrent - SampleManager::adcData.iCap);
+        mfLoop.dDL_IB_Negative = mfLoop.currentLimitKI * (-SampleManager::adcData.iCap - CapArray::capStatus.maxOutCurrent);
+
+        // 环路竞争
+        if ((SampleManager::adcData.vCap > CAPARR_MAX_VOLTAGE * 0.9f) && (mfLoop.dDL_VCap_Max < mfLoop.deltaDR))
         {
-            mfLoop.deltaIL = mfLoop.dIL_VCap_Max;
+            mfLoop.deltaDR = mfLoop.dDL_VCap_Max;
             ctrlData.limitFactor = CAPARR_VOLTAGE_MAX;
         }
-        else if (SampleManager::adcData.iCap > CapArray::capStatus.maxInCurrent && mfLoop.dIL_IB_Positive < mfLoop.deltaIL)
+        else if (SampleManager::adcData.iCap > CapArray::capStatus.maxInCurrent && mfLoop.dDL_IB_Positive < mfLoop.deltaDR)
         {
-            mfLoop.deltaIL = mfLoop.dIL_IB_Positive;
+            mfLoop.deltaDR = mfLoop.dDL_IB_Positive;
             ctrlData.limitFactor = IB_POSITIVE;
         }
-        else if (SampleManager::adcData.iCap < -CapArray::capStatus.maxOutCurrent && mfLoop.dIL_IB_Negative > mfLoop.deltaIL)
+        else if (SampleManager::adcData.iCap < -CapArray::capStatus.maxOutCurrent && mfLoop.dDL_IB_Negative > mfLoop.deltaDR)
         {
-            mfLoop.deltaIL = mfLoop.dIL_IB_Negative;
+            mfLoop.deltaDR = mfLoop.dDL_IB_Negative;
             ctrlData.limitFactor = IB_NEGATIVE;
         }
 
-        psData.iLTarget += mfLoop.deltaIL;
-        psData.iLTarget = M_CLAMP(psData.iLTarget, -psData.iLLimit, psData.iLLimit);
+        psData.dutyTarget += mfLoop.deltaDR;
+        psData.dutyTarget = M_CLAMP(psData.dutyTarget, -psData.iLLimit, psData.iLLimit);
     }
 
     void updateRefereePower(const Communication::RxData &rd, const uint32_t &currentTick)
@@ -114,5 +118,42 @@ namespace PowerManager
 
         ctrlData.pRefereeTarget = M_CLAMP(ctrlData.refLoop.pRefereeBias + rd.refereePowerLimit, 5.0f, 135.0f);
         ctrlData.refLoop.lastTimestamp = currentTick;
+    }
+}
+
+extern "C"
+{
+    __RAM_FUNC void HRTIM1_Master_IRQHandler(void) // 272kHz/8
+    {
+        __HAL_HRTIM_MASTER_CLEAR_IT(&hhrtim1, HRTIM_MASTER_IT_MREP);
+
+        // 清零中断负载检测Timer
+        __HAL_TIM_SET_COUNTER(&htim16, 0);
+
+        // 计算ADC采样值
+        SampleManager::updateADCmf();
+
+        if (psData.outputABEnabled)
+        {
+            Protection::checkShortCircuit();
+
+            Protection::hrtimFaultHandler();
+
+            PowerManager::updateMFLoop();
+
+            HRTIM::modeStateMachine();
+
+            PowerManager::updatePWM();
+
+            Protection::checkEfficiency();
+
+            CapArray::updateCurrentforEstimation();
+        }
+        else
+        {
+            PowerManager::mfLoop.iRPID.resetError();
+        }
+
+        psData.IRQLoad = __HAL_TIM_GET_COUNTER(&htim16) * (1.0f / 170.0f);
     }
 }

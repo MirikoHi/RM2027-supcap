@@ -51,6 +51,6 @@ namespace Communication
     
     void sendData();
 
-    void receiveData();
+    void receiveData(const RxData &rd);
 
 } // namespace Communication

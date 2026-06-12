@@ -64,7 +64,7 @@ namespace Communication
         HAL_FDCAN_Start(&hfdcan2);
     }
 
-    static void generateTxData(TxData &td)
+    void generateTxData(TxData &td)
     {
         td = {};
         // PowerManager::status.errorCode | ((uint8_t) !PowerManager::status.outputEnabled) << 7;
@@ -87,7 +87,7 @@ namespace Communication
         td.chassisPowerLimit = CapArray::getMaxPowerFeedback() + rxData.refereePowerLimit; // TODO
     }
 
-    static void generateTxDataNew(TxDataNew &td)
+    void generateTxDataNew(TxDataNew &td)
     {
         td = {};
         td.statusCode = 0x00;
