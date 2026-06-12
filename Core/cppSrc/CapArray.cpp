@@ -24,7 +24,7 @@ namespace CapArray
         }
     }
 
-    __RAM_FUNC inline void updateCurrentforEstimation()
+    __RAM_FUNC void updateCurrentforEstimation()
     {
         capStatus.capEstData.maxIB = M_MAX(capStatus.capEstData.maxIB, SampleManager::adcData.iB);
         capStatus.capEstData.minIB = M_MIN(capStatus.capEstData.minIB, SampleManager::adcData.iB);
