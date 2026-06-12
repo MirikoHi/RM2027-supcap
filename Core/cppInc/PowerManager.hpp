@@ -2,6 +2,7 @@
 
 #include "Config.hpp"
 #include "PID.hpp"
+#include "Communication.hpp"
 #include "hrtim.h"
 #include "main.h"
 
@@ -77,5 +78,10 @@ namespace PowerManager
     extern LoopControlData mfLoop;
 
     void powerOnOffControl();
-    void updatePWM(float VBToVA);
+
+    void updatePWM();
+
+    void updateMFLoop();
+
+    void updateRefereePower(const Communication::RxData &rd, const uint32_t& currentTick);
 }
