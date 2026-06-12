@@ -2,6 +2,8 @@
 #include "SampleManager.hpp"
 #include "SystemState.hpp"
 #include "Modulation.hpp"
+#include "PowerManager.hpp"
+#include "Communication.hpp"
 #include <cstring>
 
 const SampleManager::ADCFitParaTypeDef adcFitList[ADC_FIT_LIST_NUM] = {
@@ -11,7 +13,7 @@ const SampleManager::ADCFitParaTypeDef adcFitList[ADC_FIT_LIST_NUM] = {
 namespace Protection
 {
     ErrorData errorData;
-    
+
     void errorHandlerLF()
     {
         if (errorData.errorLevel == WARNING)
@@ -212,9 +214,22 @@ namespace Protection
             HRTIM::enableOutputAB();
         }
     }
-    
+
     void checkRxDataTimeout(const uint32_t &currentTick)
     {
-        
+        if (PowerManager::ctrlData.refLoop.isConnected && (currentTick - PowerManager::ctrlData.refLoop.lastTimestamp > RXDATA_TIMEOUT)) //
+        {
+            PowerManager::ctrlData.pRefereeTarget = REFEREE_DEFUALT_POWER;
+            PowerManager::ctrlData.refLoop.lastError = 0.0f;
+            PowerManager::ctrlData.refLoop.integral = 0.0f;
+            PowerManager::ctrlData.refLoop.isConnected = 0;
+            PowerManager::ctrlData.vCapArrNormal = CAPARR_MAX_VOLTAGE;
+
+            Communication::rxData.enableDCDC = 1;
+            Communication::rxData.systemRestart = 0;
+            Communication::rxData.clearError = 0;
+            Communication::rxData.enableActiveChargingLimit = 0;
+            Communication::rxData.refereePowerLimit = REFEREE_DEFUALT_POWER;
+        }
     }
 } // namespace Protection

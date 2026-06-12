@@ -45,6 +45,10 @@ namespace Communication
 
     void init();
 
+    void generateTxData(TxData &td);
+
+    void generateTxDataNew(TxDataNew &td);
+    
     void sendData();
 
     void receiveData();
