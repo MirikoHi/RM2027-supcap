@@ -17,6 +17,8 @@ namespace PowerManager
         IB_NEGATIVE,
     };
 
+    /** @brief 限制因子类型，用于标识当前受何种约束限制 */
+
     enum WPTStatus
     {
         WPT_ERROR = 0,    // 非无线充电硬件，或发生错误
@@ -24,6 +26,8 @@ namespace PowerManager
         WPT_CHARGING = 2, // 无线充电中
         WPT_FINISHED = 3  // 无线充电完成(电压>98%, 能量大于96%)
     };
+
+    /** @brief 无线充电（WPT）状态 */
 
     struct ControlData
     {
@@ -39,17 +43,23 @@ namespace PowerManager
             bool useNewFeedbackMessage = 0;
         };
 
+        /** @brief 当前限制因子 */
         LimitFactor limitFactor;
 
+        /** @brief 裁判环路相关数据 */
         RefereeData refLoop;
 
+        /** @brief 裁判目标功率 */
         float pRefereeTarget = REFEREE_DEFUALT_POWER;
 
+        /** @brief 电容组正常工作电压阈值 */
         float vCapArrNormal = CAPARR_MAX_VOLTAGE;
 
-        bool allowCharge = false; // 是否允许充电
+        /** @brief 是否允许充电 */
+        bool allowCharge = false;
 
-        WPTStatus wptStatus = WPT_OFF; // 无线充电状态
+        /** @brief 无线充电状态 */
+        WPTStatus wptStatus = WPT_OFF;
     };
 
     extern ControlData ctrlData;

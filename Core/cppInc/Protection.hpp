@@ -5,6 +5,7 @@
 
 namespace Protection
 {
+    /** @brief 错误位标识（按位 OR 合并） */
     enum
     {
         ERROR_POWERSTATE = 0b0000000000000001,
@@ -51,6 +52,35 @@ namespace Protection
         float errorCurrent = 0.0f;
     };
 
+    /**
+     * @brief 错误与保护相关的数据结构
+     */
+    struct ErrorData
+    {
+        /** @brief 当前错误位掩码（使用上方枚举定义） */
+        uint16_t errorCode = 0;
+        /** @brief 短路事件计数 */
+        uint16_t shortCircuitCnt = 0;
+        /** @brief 过压事件计数 */
+        uint16_t overVoltageCnt = 0;
+        /** @brief 过流事件计数 */
+        uint16_t overCurrentCnt = 0;
+        /** @brief 是否处于低电池警告 */
+        bool lowBattery = 0;
+        /** @brief 低电压计数 */
+        uint16_t lowBatteryCnt = 0;
+        /** @brief 当前错误等级 */
+        ErrorLevel errorLevel = NO_ERROR;
+        /** @brief 系统累计关机计数 */
+        uint32_t powerOffCnt = 0;
+
+        /** @brief 触发错误时记录的电压值 */
+        float errorVoltage = 0.0f;
+        /** @brief 触发错误时记录的电流值 */
+        float errorCurrent = 0.0f;
+    };
+
+    /** @brief 全局错误数据实例 */
     extern ErrorData errorData;
 
     /// @brief 错误处理主函数

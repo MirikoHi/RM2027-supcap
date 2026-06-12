@@ -1,6 +1,14 @@
 #pragma once
 
+/**
+ * @file Config.hpp
+ * @brief 全局配置、宏定义和保护阈值
+ *
+ * 该头文件包含工程中使用的常用宏、滤波参数、保护阈值与通信标识等。
+ */
+
 // Math Funtion
+/** @brief 返回较小值 */
 #define M_MIN(a, b) ((a) < (b) ? (a) : (b))
 #define M_MAX(a, b) ((a) > (b) ? (a) : (b))
 #define M_ABS(x) ((x) < 0 ? -(x) : (x))
@@ -8,7 +16,6 @@
 
 #define ADC_FILTER_ALPHA 0.7f // ADC滤波系数
 
-// Developer
 #define HRTIM_PERIOD 20000
 #define ADC_FIT_LIST_NUM 50        // adcFitList在Core\cppSrc\Protection.cpp
 #define SOFT_START_TIME 8          // 软启动计数值，单位为(1/4kHz)
@@ -20,7 +27,6 @@
 #define REFEREE_POWER_BIAS_WARNING 10.0f
 #define RXDATA_TIMEOUT 500U
 
-// 电容组保护
 #define CAPARR_CUTOFF_VOLTAGE 5.0f
 #define CAPARR_LOW_VOLTAGE 10.0f
 #define CAPARR_MAX_VOLTAGE 28.8f
