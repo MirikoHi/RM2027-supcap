@@ -10,12 +10,14 @@
 #include "PowerManager.hpp"
 #include "Modulation.hpp"
 
+#include <cassert>
+
 SystemData sysData;
 PowerState psData;
 
 namespace SuperCap
 {
-    static void loop()
+    void loop()
     {
         while (true)
         {
@@ -46,6 +48,7 @@ namespace SuperCap
         Protection::checkHardwareUID();
 
         SampleManager::initAnalog();
+
         SampleManager::initADC();
 
         HAL_Delay(600);

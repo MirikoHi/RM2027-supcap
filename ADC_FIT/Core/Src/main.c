@@ -225,16 +225,11 @@ __RAM_FUNC void HRTIM1_Master_IRQHandler(void){
       sumData3[0] += rawData3[i];
   }
 
-  ADC_IA = (1 - 0.7f) * ADC_IA +
-                0.7f * ((uint16_t)sumData12[2]);
-  ADC_VA = (1 - 0.7f) * ADC_VA +
-                0.7f * ((uint16_t)sumData12[3]);
-  ADC_VB = (1 - 0.7f) * ADC_VB +
-                0.7f * ((uint16_t)(sumData12[0] >> 16));
-  ADC_IR = (1 - 0.7f) * ADC_IR +
-                      0.7f * ((uint16_t)(sumData12[2] >> 16));
-  ADC_IB = (1 - 0.7f) * ADC_IB +
-                0.7f * ((uint16_t)sumData3[0]);
+  ADC_IA = (uint16_t)sumData12[2];
+  ADC_VA = (uint16_t)sumData12[3];
+  ADC_VB = (uint16_t)(sumData12[0] >> 16);
+  ADC_IR = (uint16_t)(sumData12[2] >> 16);
+  ADC_IB = (uint16_t)sumData3[0];
   
   UNUSED(0);
 

@@ -12,7 +12,7 @@
 #define HRTIM_PERIOD 20000
 #define ADC_FIT_LIST_NUM 50        // adcFitList在Core\cppSrc\Protection.cpp
 #define SOFT_START_TIME 8          // 软启动计数值，单位为(1/4kHz)
-#define MAX_INDUCTOR_CURRENT 25.0f // 最大电感电流
+#define MAX_INDUCTOR_CURRENT 23.0f // 最大电感电流
 /*-------- DEFUALT --------*/
 #define REFEREE_DEFUALT_POWER 37.0f
 #define REFEREE_ENERGY_BUFFER 57U
@@ -60,3 +60,6 @@
 #define OCP_CAPARR 25.5f
 #define OCP_CHASSIS 20.0f
 #define OCP_REFEREE 6.5f
+
+// WPT
+#define WPT_VOLTAGE_TARGET 26.2f // 无线充电目标电压

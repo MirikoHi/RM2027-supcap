@@ -10,6 +10,7 @@
 #include "fdcan.h"
 
 #include <cmath>
+#include <cassert>
 
 namespace Communication
 {

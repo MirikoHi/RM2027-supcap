@@ -31,8 +31,8 @@ namespace SampleManager
         HAL_Delay(50);
 
         // 双ADC同步采样
-        HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *)adcData.rawData12, ADC12_BUFFER_SIZE);
         HAL_ADC_Start(&hadc2);
+        HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *)adcData.rawData12, ADC12_BUFFER_SIZE);
         HAL_ADC_Start_DMA(&hadc3, (uint32_t *)adcData.rawData3, ADC3_BUFFER_SIZE);
     }
 
