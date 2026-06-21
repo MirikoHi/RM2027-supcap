@@ -125,8 +125,7 @@ namespace Communication
         {
             HRTIM::disableOutputAB();
             __disable_irq();
-            while (true)
-                NVIC_SystemReset();
+            NVIC_SystemReset();
         }
         if (rd.clearError)
         {

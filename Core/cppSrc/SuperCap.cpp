@@ -51,7 +51,7 @@ namespace SuperCap
 
         SampleManager::initADC();
 
-        HAL_Delay(600);
+        HAL_Delay(200);
 
         HAL_TIM_Base_Start_IT(&htim2);
         HAL_TIM_Base_Start(&htim16);
@@ -62,7 +62,7 @@ namespace SuperCap
         psData.outputABEnabled = 0;
         HRTIM::startTimer();
 
-        configIWDG();
+        // configIWDG();
 
         HAL_Delay(400);
         sysData.systemInited = true;
@@ -129,5 +129,14 @@ extern "C"
 
 #endif
         }
+    }
+
+    void HAL_IncTick(void)
+    {
+        if (uwTickFreq == 0)
+        {
+            uwTickFreq = HAL_TICK_FREQ_DEFAULT;
+        }
+        uwTick += uwTickFreq;
     }
 }

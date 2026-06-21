@@ -56,10 +56,10 @@ namespace PowerManager
 
     struct LoopControlData
     {
-        IncrementalPID iRPID{0.0f, 0.0f, 0.02f, 0.0f};   // 裁判系统功率环
-        IncrementalPID iVCPID{0.0f, 0.0f, 0.02f, 0.0f};  // 电容组电压环
-        IncrementalPID iIBPID{0.0f, 0.0f, 0.02f, 0.0f};  // 电容组限制电流环(+)
-        IncrementalPID iIBNPID{0.0f, 0.0f, 0.02f, 0.0f}; // 电容组限制电流环(-)
+        IncrementalPID iRPID{0.0f, 0.0f, 0.0001f, 0.0f};   // 裁判系统功率环
+        IncrementalPID iVCPID{0.0f, 0.0f, 0.0001f, 0.0f};  // 电容组电压环
+        IncrementalPID iIBPID{0.0f, 0.0f, 0.0001f, 0.0f};  // 电容组限制电流环(+)
+        IncrementalPID iIBNPID{0.0f, 0.0f, 0.0001f, 0.0f}; // 电容组限制电流环(-)
         // IncrementalPID vCapPID {0.0f, 0.0f, 0.02f, 0.0f};
 
         float currentLimitKI = 0.01f; // 电容组电流环

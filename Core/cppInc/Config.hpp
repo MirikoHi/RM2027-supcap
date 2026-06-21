@@ -23,7 +23,7 @@
 // 电容组保护
 #define CAPARR_CUTOFF_VOLTAGE 5.0f
 #define CAPARR_LOW_VOLTAGE 10.0f
-#define CAPARR_MAX_VOLTAGE 28.8f
+#define CAPARR_MAX_VOLTAGE 22.8f
 #define CAPARR_MAX_CURRENT 15.0f
 // Hardware
 #define CAPARR_DCR 0.1f

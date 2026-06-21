@@ -48,6 +48,7 @@ namespace SampleManager
             adcData.sumData3[0] += adcData.rawData3[i];
         }
 
+        // ADC RANK
         // ADC1  vW  iW  iA  vA
         // ADC2  vB  vB  iR  iR
         // ADC3  iB
