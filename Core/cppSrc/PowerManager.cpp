@@ -39,8 +39,8 @@ namespace PowerManager
 
     __RAM_FUNC void updatePWM()
     {
-        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, psData.ACMP3);
-        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, psData.BCMP3);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, psData.ACMP3);
+        __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, psData.BCMP3);
     }
 
     __RAM_FUNC void updateMFLoop()
@@ -74,7 +74,7 @@ namespace PowerManager
         mfLoop.deltaDR = mfLoop.iRPID.getOutput();
 
         // 电容组电压环
-        mfLoop.iVCPID.update(CAPARR_MAX_VOLTAGE * 0.9f, SampleManager::adcData.vCap);
+        mfLoop.iVCPID.update(CAPARR_MAX_VOLTAGE, SampleManager::adcData.vCap);
         mfLoop.dDL_VCap_Max = mfLoop.iVCPID.getOutput();
 
         // 电容组限制电流环
@@ -102,7 +102,7 @@ namespace PowerManager
 
         psData.dutyTarget += mfLoop.deltaDR;
         // psData.dutyTarget = M_CLAMP(psData.dutyTarget, 0.6f, 1.9f);
-        psData.dutyTarget = M_CLAMP(psData.dutyTarget, 0.9f, 1.1f); // DEBUG
+        // psData.dutyTarget = M_CLAMP(psData.dutyTarget, 0.9f, 1.1f); // DEBUG
     }
 
     void updateRefereePower(const Communication::RxData &rd, const uint32_t &currentTick)

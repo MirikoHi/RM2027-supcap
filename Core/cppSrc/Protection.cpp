@@ -8,7 +8,7 @@
 
 const SampleManager::ADCFitParaTypeDef adcFitList[ADC_FIT_LIST_NUM] = {
     // UID0,    UID1,       UID2,        VA_K,    VA_B,    VB_K,    VB_B,     VW_K, VW_B, IA_K,    IA_B,    IB_K,    IB_B,      IR_K,    IR_B,     IW_K, IW_B
-    {0x0020002F, 0x45435001, 0x20343348, 0.0014f, 0.024f, 0.0014f, 0.1673f, 0.0f, 0.0f, -0.003f, 48.653f, 0.0022f, -35.764f, 0.002f, -32.465f, 0.0f, 0.0f}
+    {0x0020002F, 0x45435001, 0x20343348, 0.0014f, 0.024f, 0.0014f, 0.1673f, 0.0f, 0.0f, -0.0022f, 35.885f, 0.0022f, -35.727f, 0.0022f, -35.696f, 0.0f, 0.0f}
 };
 
 namespace Protection
@@ -17,7 +17,9 @@ namespace Protection
 
     void errorHandlerLF()
     {
-        if (errorData.errorLevel == WARNING)
+        if (errorData.errorLevel == WARNING 
+             || errorData.errorLevel == ERROR_RECOVER_AUTO || errorData.errorLevel == ERROR_RECOVER_MANUAL // DEBUG
+        )
         {
             // 逐渐减小errorCnt
             if (errorData.overCurrentCnt > 0)

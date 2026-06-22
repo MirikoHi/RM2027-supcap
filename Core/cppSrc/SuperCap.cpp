@@ -41,7 +41,7 @@ namespace SuperCap
 
     void init()
     {
-        HAL_Delay(200); // 等待电压稳定
+        HAL_Delay(900); // 等待电压稳定
 
         Communication::init();
 
