@@ -64,7 +64,7 @@ namespace SuperCap
 
         // configIWDG();
 
-        HAL_Delay(400);
+        // HAL_Delay(400);
         sysData.systemInited = true;
     }
 } // namespace SuperCap

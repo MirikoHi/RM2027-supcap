@@ -48,14 +48,14 @@ namespace PowerManager
         // 计算B侧电流限制
         CapArray::updateMaxCurrent();
         // mfLoop.iRPID.setClamp(-0.0008f, 0.0008f);
-        if (psData.softStartCnt)
-        {
-            if (SampleManager::adcData.vA > 1.0f)
-            {
-                psData.dutyTarget = SampleManager::adcData.vB / SampleManager::adcData.vA;
-                psData.dutyTarget = M_CLAMP(psData.dutyTarget, 0.6f, 1.7f);
-            }
-        }
+        // if (psData.softStartCnt)
+        // {
+        //     if (SampleManager::adcData.vA > 1.0f)
+        //     {
+        //         psData.dutyTarget = SampleManager::adcData.vB / SampleManager::adcData.vA;
+        //         psData.dutyTarget = M_CLAMP(psData.dutyTarget, 0.6f, 1.7f);
+        //     }
+        // }
 
         if (SampleManager::adcData.vCap > ctrlData.vCapArrNormal + 0.1f)
         {
