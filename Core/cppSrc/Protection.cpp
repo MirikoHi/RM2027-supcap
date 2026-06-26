@@ -18,7 +18,7 @@ namespace Protection
     void errorHandlerLF()
     {
         if (errorData.errorLevel == WARNING 
-             || errorData.errorLevel == ERROR_RECOVER_AUTO || errorData.errorLevel == ERROR_RECOVER_MANUAL // DEBUG
+        //     || errorData.errorLevel == ERROR_RECOVER_AUTO || errorData.errorLevel == ERROR_RECOVER_MANUAL // DEBUG
         )
         {
             // 逐渐减小errorCnt
