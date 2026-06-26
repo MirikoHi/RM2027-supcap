@@ -10,12 +10,14 @@
 #include "PowerManager.hpp"
 #include "Modulation.hpp"
 
+#include <cassert>
+
 SystemData sysData;
 PowerState psData;
 
 namespace SuperCap
 {
-    static void loop()
+    void loop()
     {
         while (true)
         {
@@ -39,16 +41,17 @@ namespace SuperCap
 
     void init()
     {
-        HAL_Delay(200); // 等待电压稳定
+        HAL_Delay(900); // 等待电压稳定
 
         Communication::init();
 
         Protection::checkHardwareUID();
 
         SampleManager::initAnalog();
+
         SampleManager::initADC();
 
-        HAL_Delay(600);
+        HAL_Delay(200);
 
         HAL_TIM_Base_Start_IT(&htim2);
         HAL_TIM_Base_Start(&htim16);
@@ -59,9 +62,9 @@ namespace SuperCap
         psData.outputABEnabled = 0;
         HRTIM::startTimer();
 
-        configIWDG();
+        // configIWDG();
 
-        HAL_Delay(400);
+        // HAL_Delay(400);
         sysData.systemInited = true;
     }
 } // namespace SuperCap
@@ -126,5 +129,14 @@ extern "C"
 
 #endif
         }
+    }
+
+    void HAL_IncTick(void)
+    {
+        if (uwTickFreq == 0)
+        {
+            uwTickFreq = HAL_TICK_FREQ_DEFAULT;
+        }
+        uwTick += uwTickFreq;
     }
 }

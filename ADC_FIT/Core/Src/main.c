@@ -20,16 +20,13 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
-#include "fdcan.h"
 #include "hrtim.h"
-#include "iwdg.h"
 #include "opamp.h"
-#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <string.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,13 +47,15 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+uint32_t UID[3];
+uint32_t rawData12[32];
+uint32_t rawData3[8];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-extern void systemStart();
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -97,22 +96,65 @@ int main(void)
   MX_ADC1_Init();
   MX_ADC2_Init();
   MX_ADC3_Init();
-  MX_FDCAN2_Init();
   MX_HRTIM1_Init();
   MX_OPAMP1_Init();
   MX_OPAMP2_Init();
   MX_OPAMP3_Init();
-  MX_TIM2_Init();
-  MX_IWDG_Init();
-  MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
-  systemStart();
+
+  HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TA1 + HRTIM_OUTPUT_TA2);
+  HAL_HRTIM_WaveformOutputStop(&hhrtim1, HRTIM_OUTPUT_TB1 + HRTIM_OUTPUT_TB2);
+
+  //运放自校准
+  HAL_OPAMP_SelfCalibrate(&hopamp1);
+  HAL_Delay(1);
+
+  HAL_OPAMP_SelfCalibrate(&hopamp2);
+  HAL_Delay(1);
+
+  HAL_OPAMP_SelfCalibrate(&hopamp3);
+  HAL_Delay(1);
+
+  //启动运放
+  HAL_OPAMP_Start(&hopamp1);
+  HAL_OPAMP_Start(&hopamp2);
+  HAL_OPAMP_Start(&hopamp3);
+
+  //ADC自校准
+  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+  HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
+  HAL_ADCEx_Calibration_Start(&hadc3, ADC_SINGLE_ENDED);
+  HAL_Delay(50);
+
+  // 双ADC同步采样
+  HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *)rawData12, 32);
+  HAL_ADC_Start(&hadc2);
+  HAL_ADC_Start_DMA(&hadc3, (uint32_t *)rawData3, 8);
+
+  // startTimer
+  __HAL_HRTIM_MASTER_ENABLE_IT(&hhrtim1, HRTIM_MASTER_IT_MREP);
+  HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_MASTER);
+  HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_A);
+  HAL_HRTIM_WaveformCountStart(&hhrtim1, HRTIM_TIMERID_TIMER_B);
+
+  // enableOutputAB
+  HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TA1 + HRTIM_OUTPUT_TA2);
+  HAL_HRTIM_WaveformOutputStart(&hhrtim1, HRTIM_OUTPUT_TB1 + HRTIM_OUTPUT_TB2);
+
+  HAL_Delay(200);
+
+  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, 5500);
+  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, 5500);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    UID[0] = HAL_GetUIDw0(); //获取UID
+    UID[1] = HAL_GetUIDw1(); //获取UID
+    UID[2] = HAL_GetUIDw2(); //获取UID
+    HAL_Delay(800);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -136,9 +178,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV5;
@@ -167,7 +208,34 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+uint32_t sumData12[4];
+uint32_t sumData3[1];
+float ADC_IA,ADC_VA,ADC_VB,ADC_IR,ADC_IB;
+__RAM_FUNC void HRTIM1_Master_IRQHandler(void){
 
+  __HAL_HRTIM_MASTER_CLEAR_IT(&hhrtim1, HRTIM_MASTER_IT_MREP);
+
+  for (uint8_t i = 0; i < 8; i++)
+  {
+      for (uint8_t j = 0; j < 4; j++)
+      {
+          sumData12[j] += rawData12[i * 4 + j];
+      }
+
+      sumData3[0] += rawData3[i];
+  }
+
+  ADC_IA = (uint16_t)sumData12[2];
+  ADC_VA = (uint16_t)sumData12[3];
+  ADC_VB = (uint16_t)(sumData12[0] >> 16);
+  ADC_IR = (uint16_t)(sumData12[2] >> 16);
+  ADC_IB = (uint16_t)sumData3[0];
+  
+  UNUSED(0);
+
+  memset(sumData12, 0, sizeof(sumData12));
+  sumData3[0] = 0;
+}
 /* USER CODE END 4 */
 
 /**

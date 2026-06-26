@@ -31,8 +31,8 @@ namespace SampleManager
         HAL_Delay(50);
 
         // 双ADC同步采样
-        HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *)adcData.rawData12, ADC12_BUFFER_SIZE);
         HAL_ADC_Start(&hadc2);
+        HAL_ADCEx_MultiModeStart_DMA(&hadc1, (uint32_t *)adcData.rawData12, ADC12_BUFFER_SIZE);
         HAL_ADC_Start_DMA(&hadc3, (uint32_t *)adcData.rawData3, ADC3_BUFFER_SIZE);
     }
 
@@ -48,6 +48,7 @@ namespace SampleManager
             adcData.sumData3[0] += adcData.rawData3[i];
         }
 
+        // ADC RANK
         // ADC1  vW  iW  iA  vA
         // ADC2  vB  vB  iR  iR
         // ADC3  iB

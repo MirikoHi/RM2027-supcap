@@ -98,7 +98,7 @@ namespace HRTIM
         {
         case BUCK:
             psData.ACMP3 = HRTIM_PERIOD - (psData.dutyByVoltage * HRTIM_PERIOD);
-            psData.BCMP3 = 0;
+            psData.BCMP3 = 1200;
             break;
         case BUCKBOOST:
             psData.ACMP3 = HRTIM_PERIOD - (psData.dutyByVoltage * 0.44f * HRTIM_PERIOD + 0.44f * HRTIM_PERIOD);
@@ -109,7 +109,7 @@ namespace HRTIM
             psData.BCMP3 = HRTIM_PERIOD - (0.44f * HRTIM_PERIOD / psData.dutyByVoltage + 0.44f * HRTIM_PERIOD);
             break;
         case BOOST:
-            psData.ACMP3 = 0;
+            psData.ACMP3 = 1200;
             psData.BCMP3 = HRTIM_PERIOD - (HRTIM_PERIOD / psData.dutyByVoltage);
             break;
         case CALIBRATION_B:

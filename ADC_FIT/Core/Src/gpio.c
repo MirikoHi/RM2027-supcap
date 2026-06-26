@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    iwdg.c
+  * @file    gpio.c
   * @brief   This file provides code for the configuration
-  *          of the IWDG instances.
+  *          of all used GPIO pins.
   ******************************************************************************
   * @attention
   *
@@ -17,41 +17,38 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
+
 /* Includes ------------------------------------------------------------------*/
-#include "iwdg.h"
+#include "gpio.h"
 
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
 
-IWDG_HandleTypeDef hiwdg;
-
-/* IWDG init function */
-void MX_IWDG_Init(void)
-{
-
-  /* USER CODE BEGIN IWDG_Init 0 */
-
-  /* USER CODE END IWDG_Init 0 */
-
-  /* USER CODE BEGIN IWDG_Init 1 */
-
-  /* USER CODE END IWDG_Init 1 */
-  hiwdg.Instance = IWDG;
-  hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
-  hiwdg.Init.Window = 1000;
-  hiwdg.Init.Reload = 1000;
-  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN IWDG_Init 2 */
-
-  /* USER CODE END IWDG_Init 2 */
-
-}
-
+/*----------------------------------------------------------------------------*/
+/* Configure GPIO                                                             */
+/*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
 
+/** Configure pins as
+        * Analog
+        * Input
+        * Output
+        * EVENT_OUT
+        * EXTI
+*/
+void MX_GPIO_Init(void)
+{
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+}
+
+/* USER CODE BEGIN 2 */
+
+/* USER CODE END 2 */
