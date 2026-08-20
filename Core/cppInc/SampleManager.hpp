@@ -18,8 +18,8 @@ namespace SampleManager
         uint32_t rawData12[ADC12_BUFFER_SIZE];
         uint32_t sumData12[ADC12_CHANNAL_COUNT];
 
-        uint32_t rawData3[ADC3_BUFFER_SIZE];
-        uint32_t sumData3[ADC3_CHANNAL_COUNT];
+        // uint32_t rawData3[ADC3_BUFFER_SIZE];
+        // uint32_t sumData3[ADC3_CHANNAL_COUNT];
 
         float iA = 0.0f;       // A侧电流
         float iB = 0.0f;       // B侧电流

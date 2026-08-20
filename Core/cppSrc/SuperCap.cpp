@@ -47,7 +47,7 @@ namespace SuperCap
 
         Protection::checkHardwareUID();
 
-        SampleManager::initAnalog();
+        // SampleManager::initAnalog();
 
         SampleManager::initADC();
 

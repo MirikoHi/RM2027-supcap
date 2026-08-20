@@ -23,7 +23,6 @@
 #include "fdcan.h"
 #include "hrtim.h"
 #include "iwdg.h"
-#include "opamp.h"
 #include "tim.h"
 #include "gpio.h"
 
@@ -96,14 +95,10 @@ int main(void)
   MX_DMA_Init();
   MX_ADC1_Init();
   MX_ADC2_Init();
-  MX_ADC3_Init();
+  MX_IWDG_Init();
   MX_FDCAN2_Init();
   MX_HRTIM1_Init();
-  MX_OPAMP1_Init();
-  MX_OPAMP2_Init();
-  MX_OPAMP3_Init();
   MX_TIM2_Init();
-  MX_IWDG_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
   systemStart();
@@ -141,8 +136,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV5;
-  RCC_OscInitStruct.PLL.PLLN = 68;
+  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV6;
+  RCC_OscInitStruct.PLL.PLLN = 85;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
   RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
