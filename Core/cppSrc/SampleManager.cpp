@@ -49,9 +49,8 @@ namespace SampleManager
         }
 
         // ADC RANK
-        // ADC1  vW  iW  iA  vA
-        // ADC2  vB  vB  iR  iR
-        // ADC3  iB
+        // ADC1  iW  iB  vB  vA
+        // ADC2  vW  iR  iA  iA
 
         adcData.iA = (1 - ADC_FILTER_ALPHA) * adcData.iA +
                      ADC_FILTER_ALPHA * ((uint16_t)adcData.sumData12[2] * adcFitPara.IA_K + adcFitPara.IA_B);
