@@ -51,8 +51,8 @@ namespace SampleManager
         // ADC2  vW  iR  iA  iA
         // idx    0   1   2   3    (每32bit字低16位=ADC1主, 高16位=ADC2从)
 
-        adcData.iA = (1 - ADC_FILTER_ALPHA) * adcData.iA +
-                     ADC_FILTER_ALPHA * ((uint16_t)(adcData.sumData12[2] >> 16) * adcFitPara.IA_K + adcFitPara.IA_B);
+        adcData.iA = (1 - ADC_FILTER_ALPHA_HARD) * adcData.iA +
+                     ADC_FILTER_ALPHA_HARD * ((uint16_t)(adcData.sumData12[2] >> 16) * adcFitPara.IA_K + adcFitPara.IA_B);
         adcData.vA = (1 - ADC_FILTER_ALPHA) * adcData.vA +
                      ADC_FILTER_ALPHA * ((uint16_t)adcData.sumData12[3] * adcFitPara.VA_K + adcFitPara.VA_B);
         adcData.vB = (1 - ADC_FILTER_ALPHA) * adcData.vB +

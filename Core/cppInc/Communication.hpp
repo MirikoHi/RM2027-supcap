@@ -7,7 +7,7 @@
 namespace Communication
 {
     struct __packed RxData
-    {
+    {                                          // 0x061
         uint8_t enableDCDC : 1;                // 允许启动DCDC
         uint8_t systemRestart : 1;             // 系统重启
         uint8_t resv0 : 3;                     //
@@ -45,12 +45,12 @@ namespace Communication
 
     void init();
 
-    void generateTxData(TxData &td);
+    void generateTxData(TxData& td);
 
-    void generateTxDataNew(TxDataNew &td);
-    
+    void generateTxDataNew(TxDataNew& td);
+
     void sendData();
 
-    void receiveData(const RxData &rd);
+    void receiveData(const RxData& rd);
 
 } // namespace Communication

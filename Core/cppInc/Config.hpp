@@ -7,6 +7,7 @@
 #define M_CLAMP(x, min, max) (M_MIN((max), M_MAX((min), (x))))
 
 #define ADC_FILTER_ALPHA 0.7f // ADC滤波系数
+#define ADC_FILTER_ALPHA_HARD 0.35f // di/dt,ADC滤波系数
 
 // Developer
 #define HRTIM_PERIOD 20000
@@ -23,10 +24,10 @@
 // 电容组保护
 #define CAPARR_CUTOFF_VOLTAGE 5.0f
 #define CAPARR_LOW_VOLTAGE 10.0f
-#define CAPARR_MAX_VOLTAGE 20.0f
+#define CAPARR_MAX_VOLTAGE 28.0f
 #define CAPARR_MAX_CURRENT 15.0f
 // Hardware
-#define CAPARR_DCR 0.1f
+#define CAPARR_DCR 0.07f
 #define CM01_CURRENT_LIMIT 15.0f
 // 电容组漏电/断连保护.
 // 当等效容量过低则认为电容组断连，容量过高认为电容组漏电。

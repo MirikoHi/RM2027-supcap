@@ -7,8 +7,9 @@
 #include <cstring>
 
 const SampleManager::ADCFitParaTypeDef adcFitList[ADC_FIT_LIST_NUM] = {
-    // UID0,    UID1,       UID2,        VA_K,    VA_B,    VB_K,    VB_B,     VW_K, VW_B, IA_K,    IA_B,    IB_K,    IB_B,      IR_K,    IR_B,     IW_K, IW_B
-    {0x0020002F, 0x45435001, 0x20343348, 0.0014f, 0.024f, 0.0014f, 0.1673f, 0.0f, 0.0f, -0.0022f, 35.885f, 0.0022f, -35.727f, 0.0022f, -35.696f, 0.0f, 0.0f}
+    // UID0,    UID1,       UID2,        VA_K,    VA_B,    VB_K,    VB_B,     VW_K, VW_B,  IA_K,    IA_B,     IB_K,       IB_B,      IR_K,    IR_B,     IW_K, IW_B
+    {0x0020002F, 0x45435001, 0x20343348, 0.0014f, 0.024f, 0.0014f, 0.1673f, 0.0f, 0.0f, -0.0022f,   35.885f, 0.0022f,  -35.727f, 0.0022f, -35.696f, 0.0f, 0.0f},
+    {0x00320020, 0x464D500C, 0x20373935, 0.0062f, 0.0061f,0.00621f,-0.564f, 0.0f, 0.0f, -0.0026508f,43.051f, 0.00195f, -32.030f, 0.00216f,-34.992f, 0.0f, 0.0f}
 };
 
 namespace Protection
