@@ -7,7 +7,7 @@
 #define M_CLAMP(x, min, max) (M_MIN((max), M_MAX((min), (x))))
 
 #define ADC_FILTER_ALPHA 0.7f // ADC滤波系数
-#define ADC_FILTER_ALPHA_HARD 0.35f // di/dt,ADC滤波系数
+#define ADC_FILTER_ALPHA_HARD 0.7f // di/dt,ADC滤波系数
 
 // Developer
 #define HRTIM_PERIOD 20000
@@ -15,7 +15,7 @@
 #define SOFT_START_TIME 8          // 软启动计数值，单位为(1/4kHz)
 #define MAX_INDUCTOR_CURRENT 23.0f // 最大电感电流
 /*-------- DEFUALT --------*/
-#define REFEREE_DEFUALT_POWER 37.0f
+#define REFEREE_DEFUALT_POWER 60.0f
 #define REFEREE_ENERGY_BUFFER 57U
 #define REFEREE_POWER_BIAS_LIMIT 15.0f
 #define REFEREE_POWER_BIAS_WARNING 10.0f
@@ -24,7 +24,7 @@
 // 电容组保护
 #define CAPARR_CUTOFF_VOLTAGE 5.0f
 #define CAPARR_LOW_VOLTAGE 10.0f
-#define CAPARR_MAX_VOLTAGE 28.0f
+#define CAPARR_MAX_VOLTAGE 28.5f
 #define CAPARR_MAX_CURRENT 15.0f
 // Hardware
 #define CAPARR_DCR 0.07f

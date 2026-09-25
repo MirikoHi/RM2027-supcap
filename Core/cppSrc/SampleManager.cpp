@@ -59,8 +59,8 @@ namespace SampleManager
                      ADC_FILTER_ALPHA * ((uint16_t)adcData.sumData12[2] * adcFitPara.VB_K + adcFitPara.VB_B);
         adcData.iReferee = (1 - ADC_FILTER_ALPHA) * adcData.iReferee +
                            ADC_FILTER_ALPHA * ((uint16_t)(adcData.sumData12[1] >> 16) * adcFitPara.IR_K + adcFitPara.IR_B);
-        adcData.iB = (1 - ADC_FILTER_ALPHA) * adcData.iB +
-                     ADC_FILTER_ALPHA * ((uint16_t)adcData.sumData12[1] * adcFitPara.IB_K + adcFitPara.IB_B);
+        adcData.iB = (1 - ADC_FILTER_ALPHA_HARD) * adcData.iB +
+                     ADC_FILTER_ALPHA_HARD * ((uint16_t)adcData.sumData12[1] * adcFitPara.IB_K + adcFitPara.IB_B);
 
 #ifdef WPT_HARDWARE
 

@@ -91,8 +91,8 @@ namespace HRTIM
         case BUCK:
             // A 侧占空比 = dutyByVoltage
             psData.ACMP3 = HRTIM_PERIOD - (psData.dutyByVoltage * HRTIM_PERIOD);
-            // B 侧固定占空比 ≈ 92.5%
-            psData.BCMP3 = 1500;
+            // B 侧固定占空比 ≈ 91.5%
+            psData.BCMP3 = 1700;
             break;
 
         case BUCKBOOST:
@@ -104,8 +104,8 @@ namespace HRTIM
             break;
 
         case BOOST:
-            // A 侧固定占空比 ≈ 92.5%
-            psData.ACMP3 = 1500;
+            // A 侧固定占空比 ≈ 91.5%
+            psData.ACMP3 = 1700;
             // B 侧占空比 = 1 / duty（不变）
             psData.BCMP3 = HRTIM_PERIOD - (HRTIM_PERIOD / psData.dutyByVoltage);
             break;
