@@ -15,6 +15,7 @@
 namespace Communication
 {
     RxData rxData;
+    RxData rxBuf;
     TxData txData;
     TxDataNew txDataNew;
 
@@ -180,10 +181,11 @@ extern "C"
             return;
         }
 
-        while (HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &Communication::rxHeader, (uint8_t *)&Communication::rxData) == HAL_OK)
+        while (HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &Communication::rxHeader, (uint8_t *)&Communication::rxBuf) == HAL_OK)
         {
-            if ((Communication::rxHeader.Identifier == 0x061) && (Communication::rxHeader.DataLength == 0x8) && (Communication::rxHeader.IdType == FDCAN_STANDARD_ID)) //
+            if ((Communication::rxHeader.Identifier == 0x061) && (Communication::rxHeader.DataLength == FDCAN_DLC_BYTES_8) && (Communication::rxHeader.IdType == FDCAN_STANDARD_ID)) //
             {
+                Communication::rxData = Communication::rxBuf;
                 PowerManager::ctrlData.refLoop.isConnected = 1;
                 Communication::receiveData(Communication::rxData);
                 PowerManager::updateRefereePower(Communication::rxData, sysData.vTick);
