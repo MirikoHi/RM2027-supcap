@@ -17,7 +17,7 @@ namespace Communication
 
         uint16_t refereePowerLimit;       // 裁判限制功率，单位W
         uint16_t refereeEnergyBuffer;     // 裁判能量缓冲，单位J
-        uint8_t activeChargingLimitRatio; // 主动充电限制比例（能量），0-255
+        uint8_t activeChargingLimitRatio; // 主动充电限制比例（能量），0-255 (enableActiveChargingLimit = 1)
         uint16_t resv2;                   //
     };
 
