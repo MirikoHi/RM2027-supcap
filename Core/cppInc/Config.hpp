@@ -1,0 +1,65 @@
+#pragma once
+
+// Math Funtion
+#define M_MIN(a, b) ((a) < (b) ? (a) : (b))
+#define M_MAX(a, b) ((a) > (b) ? (a) : (b))
+#define M_ABS(x) ((x) < 0 ? -(x) : (x))
+#define M_CLAMP(x, min, max) (M_MIN((max), M_MAX((min), (x))))
+
+#define ADC_FILTER_ALPHA 0.7f // ADC滤波系数
+
+// Developer
+#define HRTIM_PERIOD 20000
+#define ADC_FIT_LIST_NUM 50        // adcFitList在Core\cppSrc\Protection.cpp
+#define SOFT_START_TIME 8          // 软启动计数值，单位为(1/4kHz)
+#define MAX_INDUCTOR_CURRENT 23.0f // 最大电感电流
+/*-------- DEFUALT --------*/
+#define REFEREE_DEFUALT_POWER 37.0f
+#define REFEREE_ENERGY_BUFFER 57U
+#define REFEREE_POWER_BIAS_LIMIT 15.0f
+#define REFEREE_POWER_BIAS_WARNING 10.0f
+#define RXDATA_TIMEOUT 500U
+
+// 电容组保护
+#define CAPARR_CUTOFF_VOLTAGE 5.0f
+#define CAPARR_LOW_VOLTAGE 10.0f
+#define CAPARR_MAX_VOLTAGE 20.0f
+#define CAPARR_MAX_CURRENT 15.0f
+// Hardware
+#define CAPARR_DCR 0.1f
+#define CM01_CURRENT_LIMIT 15.0f
+// 电容组漏电/断连保护.
+// 当等效容量过低则认为电容组断连，容量过高认为电容组漏电。
+#define CAPARR_DEFUALT_CAPACITY 4.4f
+#define CAPARR_CAPACITY_HT 10.0f
+#define CAPARR_CAPACITY_LT 0.2f
+
+// CAN通信Filter
+#define RX_FILTER 0x061
+#define TX_IDENTIFIER 0x051
+#define TX_IDENTIFIER_NEW 0x052
+
+// 裁判系统关断
+#define REFEREE_UVLO_LIMIT 18.0f // 轮腿特殊阈值15V，正常阈值18V
+#define REFEREE_UVLO_RECOVERY 20.0f
+
+// 裁判系统欠压
+#define BATTERY_LOW_LIMIT 20.92f
+#define BATTERY_LOW_RECOVERY 21.6f
+
+// 短路保护阈值
+#define SCP_VOLTAGE 5.0f
+#define SCP_CURRENT 5.0f
+#define SCP_RECOVER_TIME 1000
+
+// 过压保护阈值
+#define OVP_A 29.0f
+#define OVP_B 30.5f
+
+// 过流保护阈值
+#define OCP_CAPARR 25.5f
+#define OCP_CHASSIS 20.0f
+#define OCP_REFEREE 6.5f
+
+// WPT
+#define WPT_VOLTAGE_TARGET 26.2f // 无线充电目标电压

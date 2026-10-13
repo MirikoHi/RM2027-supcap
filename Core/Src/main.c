@@ -56,7 +56,7 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
+extern void systemStart();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -106,7 +106,7 @@ int main(void)
   MX_IWDG_Init();
   MX_TIM16_Init();
   /* USER CODE BEGIN 2 */
-
+  systemStart();
   /* USER CODE END 2 */
 
   /* Infinite loop */
