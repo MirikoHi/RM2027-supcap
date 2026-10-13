@@ -1,9 +1,9 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    opamp.h
+  * @file    fdcan.h
   * @brief   This file contains all the function prototypes for
-  *          the opamp.c file
+  *          the fdcan.c file
   ******************************************************************************
   * @attention
   *
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __OPAMP_H__
-#define __OPAMP_H__
+#ifndef __FDCAN_H__
+#define __FDCAN_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,19 +32,13 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern OPAMP_HandleTypeDef hopamp1;
-
-extern OPAMP_HandleTypeDef hopamp2;
-
-extern OPAMP_HandleTypeDef hopamp3;
+extern FDCAN_HandleTypeDef hfdcan2;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
-void MX_OPAMP1_Init(void);
-void MX_OPAMP2_Init(void);
-void MX_OPAMP3_Init(void);
+void MX_FDCAN2_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -54,5 +48,5 @@ void MX_OPAMP3_Init(void);
 }
 #endif
 
-#endif /* __OPAMP_H__ */
+#endif /* __FDCAN_H__ */
 

@@ -7,7 +7,7 @@
 namespace Communication
 {
     struct __packed RxData
-    {
+    {                                          // 0x061
         uint8_t enableDCDC : 1;                // 允许启动DCDC
         uint8_t systemRestart : 1;             // 系统重启
         uint8_t resv0 : 3;                     //
@@ -17,7 +17,7 @@ namespace Communication
 
         uint16_t refereePowerLimit;       // 裁判限制功率，单位W
         uint16_t refereeEnergyBuffer;     // 裁判能量缓冲，单位J
-        uint8_t activeChargingLimitRatio; // 主动充电限制比例（能量），0-255
+        uint8_t activeChargingLimitRatio; // 主动充电限制比例（能量），0-255 (enableActiveChargingLimit = 1)
         uint16_t resv2;                   //
     };
 
@@ -45,12 +45,12 @@ namespace Communication
 
     void init();
 
-    void generateTxData(TxData &td);
+    void generateTxData(TxData& td);
 
-    void generateTxDataNew(TxDataNew &td);
-    
+    void generateTxDataNew(TxDataNew& td);
+
     void sendData();
 
-    void receiveData(const RxData &rd);
+    void receiveData(const RxData& rd);
 
 } // namespace Communication

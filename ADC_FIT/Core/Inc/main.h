@@ -57,20 +57,6 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define V_SENSE_W_Pin GPIO_PIN_2
-#define V_SENSE_W_GPIO_Port GPIOA
-#define V_SENSE_B_Pin GPIO_PIN_6
-#define V_SENSE_B_GPIO_Port GPIOA
-#define V_SENSE_A_Pin GPIO_PIN_1
-#define V_SENSE_A_GPIO_Port GPIOB
-#define I_SENSE_A_Pin GPIO_PIN_12
-#define I_SENSE_A_GPIO_Port GPIOB
-#define I_SENSE_B_Pin GPIO_PIN_13
-#define I_SENSE_B_GPIO_Port GPIOB
-#define I_SENSE_W_Pin GPIO_PIN_14
-#define I_SENSE_W_GPIO_Port GPIOB
-#define I_SENSE_R_Pin GPIO_PIN_15
-#define I_SENSE_R_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

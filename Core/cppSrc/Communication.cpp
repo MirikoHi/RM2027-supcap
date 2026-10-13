@@ -15,6 +15,7 @@
 namespace Communication
 {
     RxData rxData;
+    RxData rxBuf;
     TxData txData;
     TxDataNew txDataNew;
 
@@ -52,8 +53,8 @@ namespace Communication
         filter.FilterIndex = 0;
         filter.FilterType = FDCAN_FILTER_DUAL;
         filter.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-        filter.FilterID1 = RX_FILTER << 5;
-        filter.FilterID2 = RX_FILTER << 5;
+        filter.FilterID1 = RX_FILTER;
+        filter.FilterID2 = RX_FILTER;
 
         rxData.enableDCDC = 1;
         rxData.systemRestart = 0;
@@ -176,13 +177,15 @@ extern "C"
     {
         HAL_FDCAN_IRQHandler(&hfdcan2);
 
-        if ((hfdcan2.Instance->RXF0S & FDCAN_RXF0S_F0FL) == 0U)
+        if ((hfdcan2.Instance->RXF0S & FDCAN_RXF0S_F0FL) == 0U){
             return;
+        }
 
-        while (HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &Communication::rxHeader, (uint8_t *)&Communication::rxData) == HAL_OK)
+        while (HAL_FDCAN_GetRxMessage(&hfdcan2, FDCAN_RX_FIFO0, &Communication::rxHeader, (uint8_t *)&Communication::rxBuf) == HAL_OK)
         {
-            if ((Communication::rxHeader.Identifier == 0x061) && (Communication::rxHeader.DataLength == 0x8) && (Communication::rxHeader.IdType == FDCAN_STANDARD_ID)) //
+            if ((Communication::rxHeader.Identifier == 0x061) && (Communication::rxHeader.DataLength == FDCAN_DLC_BYTES_8) && (Communication::rxHeader.IdType == FDCAN_STANDARD_ID)) //
             {
+                Communication::rxData = Communication::rxBuf;
                 PowerManager::ctrlData.refLoop.isConnected = 1;
                 Communication::receiveData(Communication::rxData);
                 PowerManager::updateRefereePower(Communication::rxData, sysData.vTick);
