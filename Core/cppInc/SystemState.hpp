@@ -12,6 +12,8 @@ struct SystemData
     uint32_t hardwareUID[3];
 
     uint8_t lfLoopIndex = 0; // 低频环路
+
+    uint8_t canLoopIndex = 0; // CAN通信分频
 };
 
 extern SystemData sysData;
