@@ -51,6 +51,7 @@
 uint32_t UID[3];
 uint32_t rawData12[32];
 uint32_t rawData3[8];
+uint32_t duty = 900;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -129,18 +130,27 @@ int main(void)
 
   HAL_Delay(200);
 
-  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, 1500);
-  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, 1500);
+  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, duty);
+  __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, duty);
+
+  UID[0] = HAL_GetUIDw0(); //获取UID
+  UID[1] = HAL_GetUIDw1(); //获取UID
+  UID[2] = HAL_GetUIDw2(); //获取UID
+
+  uint32_t duty_temp = duty;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    UID[0] = HAL_GetUIDw0(); //获取UID
-    UID[1] = HAL_GetUIDw1(); //获取UID
-    UID[2] = HAL_GetUIDw2(); //获取UID
-    HAL_Delay(800);
+    if(duty_temp != duty){
+      duty_temp = duty;
+      //__HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_A, HRTIM_COMPAREUNIT_3, duty_temp);
+      __HAL_HRTIM_SETCOMPARE(&hhrtim1, HRTIM_TIMERINDEX_TIMER_B, HRTIM_COMPAREUNIT_3, duty_temp);
+
+    }
+    HAL_Delay(500);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
